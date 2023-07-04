@@ -18,7 +18,7 @@ import Snackbar from 'react-native-snackbar';
 export default function App(): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [resultValue, setResultValue] = useState('');
-  const [targetValue, setTargetValue] = useState('');
+  const [targetCurrency, setTargetCurrency] = useState('');
 
   const buttonPressed = (targetValue: Currency) => {
     if (!inputValue) {
@@ -34,7 +34,7 @@ export default function App(): JSX.Element {
       const convertedValue = inputAmount * targetValue.value;
       const result = `${targetValue.symbol} ${convertedValue.toFixed(2)}`;
       setResultValue(result);
-      setTargetValue(targetValue.name);
+      setTargetCurrency(targetValue.name);
     } else {
       return Snackbar.show({
         text: 'Not a valid number',
@@ -68,12 +68,12 @@ export default function App(): JSX.Element {
         </View>
         <View style={styles.bottomContainer}>
           <FlatList
-          numColumns={3}
+          numColumns={1}
           data={currencyByRupee}
           keyExtractor={item => item.name}
           renderItem={({item}) => (
             <Pressable 
-            style={[styles.button , targetValue === item.name && styles.selected]}
+            style={[styles.button, targetCurrency  === item.name && styles.selected]}
             onPress={() => buttonPressed(item)}
             >
               <CurrencyButton {...item} />
